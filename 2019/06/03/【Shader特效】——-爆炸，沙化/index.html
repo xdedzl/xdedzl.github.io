@@ -6,15 +6,23 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Archives: 2019/6 | xdedzl</title>
+  <title>【Shader特效】—— 爆炸，沙化 | xdedzl</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="xdedzl">
-<meta property="og:url" content="http://yoursite.com/archives/2019/06/index.html">
+  <meta name="description" content="&amp;emsp;&amp;emsp;终于可以自己写一些简单的shader特效了，今天用一个并不常用的几何着色器来做一个简单的爆炸，沙化的特效。调节shader参数之后会得到各种好玩的东西。  烟花爆炸&amp;emsp;&amp;emsp;有初速度，加速度为负的。&amp;emsp;&amp;emsp;这个还不是很像，可以加上重力加速度以及对各方向的加速度做随机可以让它看起来不那么圆。这个特效用的模型是Unity内置的球，更换一些奇怪的模">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【Shader特效】—— 爆炸，沙化">
+<meta property="og:url" content="http://yoursite.com/2019/06/03/【Shader特效】——-爆炸，沙化/index.html">
 <meta property="og:site_name" content="xdedzl">
+<meta property="og:description" content="&amp;emsp;&amp;emsp;终于可以自己写一些简单的shader特效了，今天用一个并不常用的几何着色器来做一个简单的爆炸，沙化的特效。调节shader参数之后会得到各种好玩的东西。  烟花爆炸&amp;emsp;&amp;emsp;有初速度，加速度为负的。&amp;emsp;&amp;emsp;这个还不是很像，可以加上重力加速度以及对各方向的加速度做随机可以让它看起来不那么圆。这个特效用的模型是Unity内置的球，更换一些奇怪的模">
 <meta property="og:locale" content="default">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20190428193545457.gif">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20190428195045134.JPG?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3hkZWR6bA==,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20190428195755434.gif">
+<meta property="og:updated_time" content="2019-06-03T13:09:07.938Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="xdedzl">
+<meta name="twitter:title" content="【Shader特效】—— 爆炸，沙化">
+<meta name="twitter:description" content="&amp;emsp;&amp;emsp;终于可以自己写一些简单的shader特效了，今天用一个并不常用的几何着色器来做一个简单的爆炸，沙化的特效。调节shader参数之后会得到各种好玩的东西。  烟花爆炸&amp;emsp;&amp;emsp;有初速度，加速度为负的。&amp;emsp;&amp;emsp;这个还不是很像，可以加上重力加速度以及对各方向的加速度做随机可以让它看起来不那么圆。这个特效用的模型是Unity内置的球，更换一些奇怪的模">
+<meta name="twitter:image" content="https://img-blog.csdnimg.cn/20190428193545457.gif">
   
     <link rel="alternative" href="/atom.xml" title="xdedzl" type="application/atom+xml">
   
@@ -150,49 +158,152 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-【Shader特效】——-爆炸，沙化" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2019" class="archive-year">2019</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/06/03/【Shader特效】——-爆炸，沙化/" class="archive-article-date">
-  	<time datetime="2019-06-03T13:08:48.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-06-03</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/06/03/【Shader特效】——-爆炸，沙化/">【Shader特效】—— 爆炸，沙化</a>
+    <h1 class="article-title" itemprop="name">
+      【Shader特效】—— 爆炸，沙化
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
-          
+        
+        <a href="/2019/06/03/【Shader特效】——-爆炸，沙化/" class="archive-article-date">
+  	<time datetime="2019-06-03T13:08:48.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-06-03</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>&emsp;&emsp;终于可以自己写一些简单的shader特效了，今天用一个并不常用的几何着色器来做一个简单的爆炸，沙化的特效。调节shader参数之后会得到各种好玩的东西。</p>
+</blockquote>
+<h2 id="烟花爆炸"><a href="#烟花爆炸" class="headerlink" title="烟花爆炸"></a>烟花爆炸</h2><p>&emsp;&emsp;有初速度，加速度为负的。<br>&emsp;&emsp;这个还不是很像，可以加上重力加速度以及对各方向的加速度做随机可以让它看起来不那么圆。这个特效用的模型是Unity内置的球，更换一些奇怪的模型并调节加速度和初速度后可以得到一些意想不到的效果。<br><img src="https://img-blog.csdnimg.cn/20190428193545457.gif" alt="效果"></p>
+<h2 id="模型沙化"><a href="#模型沙化" class="headerlink" title="模型沙化"></a>模型沙化</h2><p>初速度为0，加速度大于0，还是挺由意思的。<br><img src="https://img-blog.csdnimg.cn/20190428195045134.JPG?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3hkZWR6bA==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br><img src="https://img-blog.csdnimg.cn/20190428195755434.gif" alt="在这里插入图片描述"></p>
+<h2 id="Shader代码"><a href="#Shader代码" class="headerlink" title="Shader代码"></a>Shader代码</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 模型粒子化效果</span></span><br><span class="line">Shader <span class="string">"Custom/Particles"</span></span><br><span class="line">&#123;</span><br><span class="line">    Properties</span><br><span class="line">    &#123;</span><br><span class="line">        _MainTex (<span class="string">"Texture"</span>, <span class="number">2</span>D) = <span class="string">"white"</span> &#123;&#125;</span><br><span class="line">		_InitSpeed(<span class="string">"Init Speed"</span>, Float) = <span class="number">0</span></span><br><span class="line">		_Acceleration(<span class="string">"Acceleration"</span>, Float) = <span class="number">5</span></span><br><span class="line">        _ContinueTime(<span class="string">"Current Time"</span>,Int) = <span class="number">2</span></span><br><span class="line">        _Color(<span class="string">"Color"</span>,Color) = (<span class="number">1</span>,<span class="number">1</span>,<span class="number">1</span>,<span class="number">1</span>)</span><br><span class="line">    &#125;</span><br><span class="line">    SubShader</span><br><span class="line">    &#123;</span><br><span class="line">        Pass&#123;</span><br><span class="line">            Tags &#123; <span class="string">"RenderType"</span>=<span class="string">"Opaque"</span> &#125;</span><br><span class="line"></span><br><span class="line">            CGPROGRAM</span><br><span class="line">            </span><br><span class="line">            #pragma vertex vert</span><br><span class="line">            #pragma geometry geom</span><br><span class="line">            #pragma fragment frag</span><br><span class="line"></span><br><span class="line">            sampler2D _MainTex;</span><br><span class="line">            <span class="keyword">float</span> _InitSpeed;</span><br><span class="line">            <span class="keyword">float</span> _Acceleration;</span><br><span class="line">            <span class="keyword">float</span> _ContinueTime;</span><br><span class="line">            fixed4 _Color;</span><br><span class="line"></span><br><span class="line">            <span class="class"><span class="keyword">struct</span> <span class="title">a2v</span>&#123;</span></span><br><span class="line">                float4 vertex : POSITION;</span><br><span class="line">                float2 uv : TEXCOORD0;</span><br><span class="line">            &#125;;</span><br><span class="line"></span><br><span class="line">            <span class="class"><span class="keyword">struct</span> <span class="title">v2g</span>&#123;</span></span><br><span class="line">                float4 vertex : POSITION;</span><br><span class="line">                float2 uv : TEXCOORD0;</span><br><span class="line">            &#125;;</span><br><span class="line"></span><br><span class="line">            <span class="class"><span class="keyword">struct</span> <span class="title">g2f</span>&#123;</span></span><br><span class="line">                float4 vertex : POSITION;</span><br><span class="line">                float2 uv : TEXCOORD0;</span><br><span class="line">            &#125;;</span><br><span class="line"></span><br><span class="line">            <span class="function">v2g <span class="title">vert</span><span class="params">(a2v v)</span></span>&#123;</span><br><span class="line">                v2g o;</span><br><span class="line">                o.vertex = v.vertex;</span><br><span class="line">                o.uv = v.uv;</span><br><span class="line">                <span class="keyword">return</span> o;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 定义输出顶点的最大数量</span></span><br><span class="line">            [maxvertexcount(<span class="number">1</span>)]</span><br><span class="line">            <span class="function"><span class="keyword">void</span> <span class="title">geom</span><span class="params">(triangle v2g IN[<span class="number">3</span>], inout PointStream&lt;g2f&gt; pointStream)</span></span>&#123;</span><br><span class="line">                g2f o;</span><br><span class="line">                float3 v1 = IN[<span class="number">1</span>].vertex - IN[<span class="number">0</span>].vertex;</span><br><span class="line">                float3 v2 = IN[<span class="number">2</span>].vertex - IN[<span class="number">0</span>].vertex;</span><br><span class="line"></span><br><span class="line">                float3 normal = normalize(cross(v1,v2));</span><br><span class="line">                float3 pos = (IN[<span class="number">0</span>].vertex + IN[<span class="number">1</span>].vertex + IN[<span class="number">2</span>].vertex) / <span class="number">3</span>;</span><br><span class="line"></span><br><span class="line">                <span class="keyword">float</span> time = _Time.y % _ContinueTime;</span><br><span class="line">                pos += normal * (_InitSpeed * time + <span class="number">0.5</span> * _Acceleration * <span class="built_in">pow</span>(time, <span class="number">2</span>));</span><br><span class="line"></span><br><span class="line">                o.vertex = UnityObjectToClipPos(pos);</span><br><span class="line"></span><br><span class="line">                o.uv = (IN[<span class="number">0</span>].uv + IN[<span class="number">1</span>].uv + IN[<span class="number">2</span>].uv) / <span class="number">3</span>;</span><br><span class="line"></span><br><span class="line">                pointStream.Append(o);</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            fixed4 frag (g2f i) : SV_Target</span><br><span class="line">            &#123;</span><br><span class="line">                fixed4 color = tex2D(_MainTex, i.uv) * _Color;</span><br><span class="line">                <span class="keyword">return</span> color;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            ENDCG</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line">    FallBack <span class="string">"Diffuse"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2019/06/03/【Shader特效】——-爆炸，沙化/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
-  
-  
-    </div></section>
+
   
 
-    
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+  
+  
+  
+
+  
+
+  
+
+  
 
 
           </div>
@@ -215,8 +326,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,

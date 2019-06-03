@@ -6,17 +6,17 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Hexo</title>
+  <title>xdedzl</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta property="og:type" content="website">
-<meta property="og:title" content="Hexo">
+<meta property="og:title" content="xdedzl">
 <meta property="og:url" content="http://yoursite.com/index.html">
-<meta property="og:site_name" content="Hexo">
+<meta property="og:site_name" content="xdedzl">
 <meta property="og:locale" content="default">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Hexo">
+<meta name="twitter:title" content="xdedzl">
   
-    <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
+    <link rel="alternative" href="/atom.xml" title="xdedzl" type="application/atom+xml">
   
   
     <link rel="icon" href="/favicon.png">
@@ -46,7 +46,7 @@
 			<img src class="js-avatar">
 		</a>
 		<hgroup>
-		  <h1 class="header-author"><a href="/">John Doe</a></h1>
+		  <h1 class="header-author"><a href="/">薛定谔的蟑螂</a></h1>
 		</hgroup>
 		
 
@@ -104,7 +104,7 @@
 				<img src class="js-avatar">
 			</div>
 			<hgroup>
-			  <h1 class="header-author js-header-author">John Doe</h1>
+			  <h1 class="header-author js-header-author">薛定谔的蟑螂</h1>
 			</hgroup>
 			
 			
@@ -152,39 +152,33 @@
           <div id="js-content" class="content-ll">
             
   
-    <article id="post-hello-world" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-【Shader特效】——-爆炸，沙化" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2019/06/03/hello-world/">Hello World</a>
+      <a class="article-title" href="/2019/06/03/【Shader特效】——-爆炸，沙化/">【Shader特效】—— 爆炸，沙化</a>
     </h1>
   
 
         
-        <a href="/2019/06/03/hello-world/" class="archive-article-date">
-  	<time datetime="2019-06-03T11:14:27.162Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-06-03</time>
+        <a href="/2019/06/03/【Shader特效】——-爆炸，沙化/" class="archive-article-date">
+  	<time datetime="2019-06-03T13:08:48.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-06-03</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
+        <blockquote>
+<p>&emsp;&emsp;终于可以自己写一些简单的shader特效了，今天用一个并不常用的几何着色器来做一个简单的爆炸，沙化的特效。调节shader参数之后会得到各种好玩的东西。</p>
+</blockquote>
+<h2 id="烟花爆炸"><a href="#烟花爆炸" class="headerlink" title="烟花爆炸"></a>烟花爆炸</h2><p>&emsp;&emsp;有初速度，加速度为负的。<br>&emsp;&emsp;这个还不是很像，可以加上重力加速度以及对各方向的加速度做随机可以让它看起来不那么圆。这个特效用的模型是Unity内置的球，更换一些奇怪的模型并调节加速度和初速度后可以得到一些意想不到的效果。<br><img src="https://img-blog.csdnimg.cn/20190428193545457.gif" alt="效果"></p>
+<h2 id="模型沙化"><a href="#模型沙化" class="headerlink" title="模型沙化"></a>模型沙化</h2><p>初速度为0，加速度大于0，还是挺由意思的。<br><img src="https://img-blog.csdnimg.cn/20190428195045134.JPG?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3hkZWR6bA==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br><img src="https://img-blog.csdnimg.cn/20190428195755434.gif" alt="在这里插入图片描述"></p>
+<h2 id="Shader代码"><a href="#Shader代码" class="headerlink" title="Shader代码"></a>Shader代码</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 模型粒子化效果</span></span><br><span class="line">Shader <span class="string">"Custom/Particles"</span></span><br><span class="line">&#123;</span><br><span class="line">    Properties</span><br><span class="line">    &#123;</span><br><span class="line">        _MainTex (<span class="string">"Texture"</span>, <span class="number">2</span>D) = <span class="string">"white"</span> &#123;&#125;</span><br><span class="line">		_InitSpeed(<span class="string">"Init Speed"</span>, Float) = <span class="number">0</span></span><br><span class="line">		_Acceleration(<span class="string">"Acceleration"</span>, Float) = <span class="number">5</span></span><br><span class="line">        _ContinueTime(<span class="string">"Current Time"</span>,Int) = <span class="number">2</span></span><br><span class="line">        _Color(<span class="string">"Color"</span>,Color) = (<span class="number">1</span>,<span class="number">1</span>,<span class="number">1</span>,<span class="number">1</span>)</span><br><span class="line">    &#125;</span><br><span class="line">    SubShader</span><br><span class="line">    &#123;</span><br><span class="line">        Pass&#123;</span><br><span class="line">            Tags &#123; <span class="string">"RenderType"</span>=<span class="string">"Opaque"</span> &#125;</span><br><span class="line"></span><br><span class="line">            CGPROGRAM</span><br><span class="line">            </span><br><span class="line">            #pragma vertex vert</span><br><span class="line">            #pragma geometry geom</span><br><span class="line">            #pragma fragment frag</span><br><span class="line"></span><br><span class="line">            sampler2D _MainTex;</span><br><span class="line">            <span class="keyword">float</span> _InitSpeed;</span><br><span class="line">            <span class="keyword">float</span> _Acceleration;</span><br><span class="line">            <span class="keyword">float</span> _ContinueTime;</span><br><span class="line">            fixed4 _Color;</span><br><span class="line"></span><br><span class="line">            <span class="class"><span class="keyword">struct</span> <span class="title">a2v</span>&#123;</span></span><br><span class="line">                float4 vertex : POSITION;</span><br><span class="line">                float2 uv : TEXCOORD0;</span><br><span class="line">            &#125;;</span><br><span class="line"></span><br><span class="line">            <span class="class"><span class="keyword">struct</span> <span class="title">v2g</span>&#123;</span></span><br><span class="line">                float4 vertex : POSITION;</span><br><span class="line">                float2 uv : TEXCOORD0;</span><br><span class="line">            &#125;;</span><br><span class="line"></span><br><span class="line">            <span class="class"><span class="keyword">struct</span> <span class="title">g2f</span>&#123;</span></span><br><span class="line">                float4 vertex : POSITION;</span><br><span class="line">                float2 uv : TEXCOORD0;</span><br><span class="line">            &#125;;</span><br><span class="line"></span><br><span class="line">            <span class="function">v2g <span class="title">vert</span><span class="params">(a2v v)</span></span>&#123;</span><br><span class="line">                v2g o;</span><br><span class="line">                o.vertex = v.vertex;</span><br><span class="line">                o.uv = v.uv;</span><br><span class="line">                <span class="keyword">return</span> o;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 定义输出顶点的最大数量</span></span><br><span class="line">            [maxvertexcount(<span class="number">1</span>)]</span><br><span class="line">            <span class="function"><span class="keyword">void</span> <span class="title">geom</span><span class="params">(triangle v2g IN[<span class="number">3</span>], inout PointStream&lt;g2f&gt; pointStream)</span></span>&#123;</span><br><span class="line">                g2f o;</span><br><span class="line">                float3 v1 = IN[<span class="number">1</span>].vertex - IN[<span class="number">0</span>].vertex;</span><br><span class="line">                float3 v2 = IN[<span class="number">2</span>].vertex - IN[<span class="number">0</span>].vertex;</span><br><span class="line"></span><br><span class="line">                float3 normal = normalize(cross(v1,v2));</span><br><span class="line">                float3 pos = (IN[<span class="number">0</span>].vertex + IN[<span class="number">1</span>].vertex + IN[<span class="number">2</span>].vertex) / <span class="number">3</span>;</span><br><span class="line"></span><br><span class="line">                <span class="keyword">float</span> time = _Time.y % _ContinueTime;</span><br><span class="line">                pos += normal * (_InitSpeed * time + <span class="number">0.5</span> * _Acceleration * <span class="built_in">pow</span>(time, <span class="number">2</span>));</span><br><span class="line"></span><br><span class="line">                o.vertex = UnityObjectToClipPos(pos);</span><br><span class="line"></span><br><span class="line">                o.uv = (IN[<span class="number">0</span>].uv + IN[<span class="number">1</span>].uv + IN[<span class="number">2</span>].uv) / <span class="number">3</span>;</span><br><span class="line"></span><br><span class="line">                pointStream.Append(o);</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            fixed4 frag (g2f i) : SV_Target</span><br><span class="line">            &#123;</span><br><span class="line">                fixed4 color = tex2D(_MainTex, i.uv) * _Color;</span><br><span class="line">                <span class="keyword">return</span> color;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            ENDCG</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line">    FallBack <span class="string">"Diffuse"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>
 
       
 
@@ -197,7 +191,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2019/06/03/hello-world/">展开全文 >></a>
+          <a class="article-more-a" href="/2019/06/03/【Shader特效】——-爆炸，沙化/">展开全文 >></a>
         </p>
       
 
@@ -237,7 +231,7 @@
   <div class="outer">
     <div id="footer-info">
     	<div class="footer-left">
-    		&copy; 2019 John Doe
+    		&copy; 2019 薛定谔的蟑螂
     	</div>
       	<div class="footer-right">
       		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
