@@ -14,7 +14,7 @@
     <meta name="description" content="unity开发。">
     <meta name="author" content="XDEDZL">
     <meta name="keywords" content="unity,game,shader,c#,游戏,开发者,程序猿,程序媛,极客,编程,代码,开源,IT网站,Developer,Programmer,Coder,Geek,html,css,css3,用户体验">
-    <title>项目展示 ~ xdedzl的博客</title>
+    <title>【XFramework】—— 介绍 ~ xdedzl的博客</title>
     <link rel="stylesheet" href="/lib/font-awesome/css/all.min.css?v=5.7.2">
     <link rel="stylesheet" href="/lib/mdbootstrap/css/bootstrap.min.css?v=4.3.1">
     <link rel="stylesheet" href="/lib/mdbootstrap/css/mdb.min.css?v=4.8.7">
@@ -62,7 +62,7 @@
 
 </nav>
     <div class="view intro-2"
-         style="background: url('/img/post.jpg')no-repeat center center;background-size: cover;">
+         style="background: url('https://img-blog.csdnimg.cn/2019051122531642.jpg')no-repeat center center;background-size: cover;">
         <div class="full-bg-img">
             <div class="mask rgba-black-light flex-center">
                 <div class="container text-center white-text wow fadeInUp">
@@ -71,7 +71,7 @@
                     </span>
                     
                         <br>
-                        <p>星期二, 六月 4日 2019, 8:11 晚上</p>
+                        <p>星期日, 八月 18日 2019, 9:26 上午</p>
                     
                 </div>
             </div>
@@ -92,18 +92,36 @@
             <div class="container nopadding-md">
                 <div class="py-5 z-depth-3 board">
                     <div class="post-content markdown-body m-auto">
-                        <p>包括运行时Dem地形生成和地形编辑，匣的早期演示视频，基于XFramwork做的一些工具</p>
+                        <p>这是一个轻量级的Unity开发框架，包含了Entity，FSM，Graphics，Pool，Messenger，Procedure，Resource，Task，Terrain等模块，另外还提供了一系列开发工具，本篇是对XFramework的一个整体介绍，后续会按照模块逐一添加文档</p>
 <a id="more"></a>
-<h1 id="项目展示"><a href="#项目展示" class="headerlink" title="项目展示"></a>项目展示</h1><h2 id="1-Dem生成地形-运行时地形编辑"><a href="#1-Dem生成地形-运行时地形编辑" class="headerlink" title="1.Dem生成地形 + 运行时地形编辑"></a>1.Dem生成地形 + 运行时地形编辑</h2><iframe width="560" height="315" src="https://player.bilibili.com/player.html?aid=54565726" frameborder="no" allowfullscreen="true"></iframe>
+<h1 id="XFramework-–xdedzl"><a href="#XFramework-–xdedzl" class="headerlink" title="XFramework  –xdedzl"></a>XFramework  –xdedzl</h1><p>我是薛定谔的蟑螂</p>
+<h2 id="1-启动流程"><a href="#1-启动流程" class="headerlink" title="1. 启动流程"></a>1. 启动流程</h2><p>在场景新建一个空物体命名为GameManager，将Game脚本附加到物体上。新建一个类MyFirstProcedure继承ProcedureBase，Game脚本的属性面板可以选择游戏开始时第一个进入的流程。</p>
+<h2 id="2-模块说明"><a href="#2-模块说明" class="headerlink" title="2. 模块说明"></a>2. 模块说明</h2><p><strong><code>Entity</code></strong>：实体的管理，提供了实体的加载，回收以及不同实体之间父子关系的处理。（参考了一些<a href="https://github.com/EllanJiang/GameFramework" target="_blank" rel="noopener">GameFramework</a>的设计思路）</p>
+<p><strong><code>FSM</code></strong>：状态机，内置提供了鼠标状态机。</p>
+<p><strong><code>Graphics</code></strong>：图形管理，方便的使用Unity底层绘图API在相机上绘制图形，并提供了一系列构造Mesh的工具方法。</p>
+<p><strong><code>Messenger</code></strong>：全局消息处理。</p>
+<p><strong><code>Observer</code></strong>：观察者模式实现的事件处理机制。</p>
+<p><strong><code>Pool</code></strong>：基础对象池，实体的对象池的管理集成到了Entity中。</p>
+<p><strong><code>Procedure</code></strong>：流程，实际上是一个贯穿整个游戏过程的状态机。（参考了一些<a href="https://github.com/EllanJiang/GameFramework" target="_blank" rel="noopener">GameFramework</a>的设计思路）</p>
+<p><strong><code>Resource</code></strong>：资源管理机制，统一使用Game.ResourceModule.Load<t>(“Assets/Path/xxx.png”)的方式加载，开发过程中使用AssetDataBase,输出版本后使用assetbundle。提供了ab包编辑器。</t></p>
+<p><strong><code>Task</code></strong>：任务处理。</p>
+<p><strong><code>Terrain</code></strong>：运行时Terrain编辑。</p>
+<p><strong><code>UI</code></strong>：基于UGUI的UI管理模块，GUCompotent是对UI组件的扩展并提供了一种UI组件的查找方式以替代transform.Find，在开发过程中修改了UI面板的层级之后无需更改代码。</p>
+<h2 id="2-工具类说明"><a href="#2-工具类说明" class="headerlink" title="2. 工具类说明"></a>2. 工具类说明</h2><p><strong><code>Collections</code></strong>：有向图和无向图</p>
+<p><strong><code>file parse</code></strong>：csv文件读写</p>
+<p><strong><code>Math</code></strong>：曲线拟合，二三维点线面关系，向量转换等。</p>
+<p><strong><code>Serialize</code></strong>：使用unsafe关键字的序列化方式，速度很快</p>
+<p><strong><code>Singleton</code></strong>：这理把单例归为工具类，建议用IGameModuel接口替代单例类。</p>
+<p><strong><code>extension function</code></strong>：提供一系列的扩展函数以简化。</p>
+<p><strong><code>utility function</code></strong>：实用静态方法分为几大类，IO，Log，Reflection,Text,UI。</p>
+<p><img src="https://img-blog.csdnimg.cn/2019051122531642.jpg" alt="在这里插入图片描述"></p>
 
-<h2 id="2-XFramework-Demo"><a href="#2-XFramework-Demo" class="headerlink" title="2.XFramework Demo"></a>2.XFramework Demo</h2><p><a href="https://github.com/xdedzl/XFramework" target="_blank" rel="noopener">github地址</a></p>
-<iframe width="560" height="315" src="https://player.bilibili.com/player.html?aid=56720193" frameborder="no" allowfullscreen="true"></iframe>
-
-<h2 id="2-匣（独立游戏）"><a href="#2-匣（独立游戏）" class="headerlink" title="2.匣（独立游戏）"></a>2.匣（独立游戏）</h2><p><a href="https://indienova.com/g/the-box" target="_blank" rel="noopener">项目链接</a></p>
-<iframe width="560" height="315" src="https://player.bilibili.com/player.html?aid=54572201" frameborder="no" allowfullscreen="true"></iframe>
                         <hr>
                         <div>
                             <p>
+                                
+                                    <span class="badge badge-light">#&nbsp;XFramework</span>
+                                    &nbsp;
                                 
                             </p>
                         </div>
@@ -173,7 +191,7 @@
         var typed = new Typed('#subtitle', {
           strings: [
             '  ',
-            "项目展示&nbsp;",
+            "【XFramework】—— 介绍&nbsp;",
         ],
         cursorChar: "_",
         typeSpeed: 70,
