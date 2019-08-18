@@ -123,6 +123,44 @@
     <div class="row mb-4 mx-auto">
         
         
+            <div class="col-12 col-md-4 m-auto">
+                <a href="/2019/07/24/UI/利用Graphic做UI折线图/" style="background-image: url(https://img-blog.csdnimg.cn/2019051122531642.jpg);" class="img-fluid rounded z-depth-3 index-thumbnails" target="_blank"></a>
+            </div>
+        
+        <div class="col-12 col-md-8 m-auto">
+            <a href="/2019/07/24/UI/利用Graphic做UI折线图/">
+                <p class="h4 index-header">UGUI 源码研究及扩展 ：利用Graphic做UI折线图</p>
+                <div class="index-excerpt">
+                    
+                        <div class="index-text mb-1">
+近日项目中需要用到一些数据分析的功能，查阅资料后发现了UGUI有一个用来显示图像抽象类Graphic，另外一个用来显示可遮罩图形的MaskableGraphic就是派生自Graphic， Image，Text等组件都是派生自MaskableGraphic。利用这两个类我们可以做一些自定义组件。本文利用Graphic来做一个简易的折线图。
+
+下图是利用这个组件分析地形高度的图片
+
+1.Graphic&emsp;&emsp;这个类是UGUI中所有的可视化组件的基类，这里定义了一个名为OnPopulateMesh的虚函数，我们的图形渲染代码就在这里编写。
+2.UIVertex&emsp;&emsp;UIVertex包含了顶点信息，其位置信息是以像素为单位的。 文章开头的动图上的线其实是由很多个小四边形组成的，一个小四边形由四个UIVertex组成，构建好一个UIVextex数组并赋值后，调用VertexHelper.AddUIVertexQuad(UIVertexs),将一个四边形加入渲染任务。最后要调用SetVerticesDirty()来刷新一次图像。当我们的数据发生变化的时候，也要调</div>
+                    
+                </div>
+            </a>
+
+            
+                <div>
+                    <i class="iconfont icon-riqi2"></i>&nbsp;2019-07-24
+                    &nbsp;&nbsp;&nbsp;&nbsp;
+                    
+                        <i class="iconfont icon-cc-tag-more"></i>
+                        
+                            UGUI&nbsp;
+                        
+                    
+                </div>
+            
+        </div>
+    </div>
+
+    <div class="row mb-4 mx-auto">
+        
+        
         <div class="col-12 col-md-8 m-auto">
             <a href="/2019/06/04/项目展示/">
                 <p class="h4 index-header">项目展示</p>

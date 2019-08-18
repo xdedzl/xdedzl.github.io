@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+
+
+
+
+<head><meta name="generator" content="Hexo 3.8.0">
+    <meta charset="UTF-8">
+    <link rel="apple-touch-icon" sizes="76x76" href="/img/apple-touch-icon.png">
+    <link rel="icon" type="image/png" href="/img/favicon.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="description" content="unity开发。">
+    <meta name="author" content="XDEDZL">
+    <meta name="keywords" content="unity,game,shader,c#,游戏,开发者,程序猿,程序媛,极客,编程,代码,开源,IT网站,Developer,Programmer,Coder,Geek,html,css,css3,用户体验">
+    <title>UGUI 源码研究及扩展 ：利用Graphic做UI折线图 ~ xdedzl的博客</title>
+    <link rel="stylesheet" href="/lib/font-awesome/css/all.min.css?v=5.7.2">
+    <link rel="stylesheet" href="/lib/mdbootstrap/css/bootstrap.min.css?v=4.3.1">
+    <link rel="stylesheet" href="/lib/mdbootstrap/css/mdb.min.css?v=4.8.7">
+    <link rel="stylesheet" href="/lib/github-markdown/github-markdown.min.css">
+    <link rel="stylesheet" href="https://at.alicdn.com/t/font_1067060_l7tuu6qerl9.css">
+    
+        <link rel="stylesheet" href="/lib/prettify/tomorrow-night-eighties.min.css">
+    
+    <link rel="stylesheet" href="/css/main.css">
+
+    
+</head>
+
+
+<body>
+<header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+<div class="container">
+    <a class="navbar-brand" href="/"><strong>xdedzl的博客</strong></a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav ml-auto text-center">
+            
+            <li class="nav-item">
+                <a class="nav-link" href="/">Home</a>
+            </li>
+            
+            <li class="nav-item">
+                <a class="nav-link" href="/archives/">Archives</a>
+            </li>
+            
+            <li class="nav-item">
+                <a class="nav-link" href="/about/">About</a>
+            </li>
+            
+        </ul>
+    </div>
+</div>
+
+
+</nav>
+    <div class="view intro-2"
+         style="background: url('/img/post.jpg')no-repeat center center;background-size: cover;">
+        <div class="full-bg-img">
+            <div class="mask rgba-black-light flex-center">
+                <div class="container text-center white-text wow fadeInUp">
+                    <span class="h2" id="subtitle">
+                        
+                    </span>
+                    
+                        <br>
+                        <p>星期三, 七月 24日 2019, 9:38 上午</p>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<main>
+    
+        <link rel="stylesheet" href="/css/post.css">
+
+
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="d-none d-lg-block col-lg-2"></div>
+        <div class="col-lg-8 nopadding-md">
+            <div class="container nopadding-md">
+                <div class="py-5 z-depth-3 board">
+                    <div class="post-content markdown-body m-auto">
+                        <blockquote>
+<p>近日项目中需要用到一些数据分析的功能，查阅资料后发现了UGUI有一个用来显示图像抽象类Graphic，另外一个用来显示可遮罩图形的MaskableGraphic就是派生自Graphic， Image，Text等组件都是派生自MaskableGraphic。利用这两个类我们可以做一些自定义组件。<br>本文利用Graphic来做一个简易的折线图。</p>
+</blockquote>
+<p>下图是利用这个组件分析地形高度的图片</p>
+<p><img src="https://img-blog.csdnimg.cn/2019070317110978.gif" alt="在这里插入图片描述"></p>
+<h2 id="1-Graphic"><a href="#1-Graphic" class="headerlink" title="1.Graphic"></a>1.Graphic</h2><p>&emsp;&emsp;这个类是UGUI中所有的可视化组件的基类，这里定义了一个名为OnPopulateMesh的虚函数，我们的图形渲染代码就在这里编写。</p>
+<h2 id="2-UIVertex"><a href="#2-UIVertex" class="headerlink" title="2.UIVertex"></a>2.UIVertex</h2><p><img src="https://img-blog.csdnimg.cn/20190703173057899.PNG" alt="在这里插入图片描述"><br>&emsp;&emsp;UIVertex包含了顶点信息，其位置信息是以像素为单位的。 文章开头的动图上的线其实是由很多个小四边形组成的，一个小四边形由四个UIVertex组成，构建好一个UIVextex数组并赋值后，调用VertexHelper.AddUIVertexQuad(UIVertexs),将一个四边形加入渲染任务。最后要调用SetVerticesDirty()来刷新一次图像。当我们的数据发生变化的时候，也要调用这个函数来刷新图像。</p>
+<h2 id="3-LineChat"><a href="#3-LineChat" class="headerlink" title="3.LineChat"></a>3.LineChat</h2><p>&emsp;&emsp;附上完整的组件代码</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> System.Collections.Generic;</span><br><span class="line"><span class="keyword">using</span> SFramework.Mathematics;</span><br><span class="line"><span class="keyword">using</span> UnityEngine;</span><br><span class="line"><span class="keyword">using</span> UnityEngine.UI;</span><br><span class="line"></span><br><span class="line"><span class="keyword">namespace</span> <span class="title">XFramework.UI</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;summary&gt;</span></span></span><br><span class="line">    <span class="comment"><span class="doctag">///</span> 折线图</span></span><br><span class="line">    <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;/summary&gt;</span></span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">class</span> <span class="title">LineChat</span> : <span class="title">Graphic</span></span><br><span class="line">    &#123;</span><br><span class="line">        [<span class="meta">Header(<span class="meta-string">"坐标轴显示属性"</span>)</span>]</span><br><span class="line">        <span class="keyword">public</span> <span class="keyword">float</span> width = <span class="number">200</span>;</span><br><span class="line">        <span class="keyword">public</span> <span class="keyword">float</span> height = <span class="number">200</span>;</span><br><span class="line">        <span class="keyword">public</span> <span class="keyword">float</span> lineWidth = <span class="number">5</span>;</span><br><span class="line">        <span class="keyword">public</span> Vector2 offset = <span class="keyword">new</span> Vector2(<span class="number">2</span>, <span class="number">2</span>);</span><br><span class="line">        <span class="keyword">public</span> Color axleColor = Color.red;</span><br><span class="line"></span><br><span class="line">        [<span class="meta">Header(<span class="meta-string">"坐标轴数据属性"</span>)</span>]</span><br><span class="line">        <span class="keyword">public</span> Vector2 axleMaxValue = <span class="keyword">new</span> Vector2(<span class="number">100</span>, <span class="number">100</span>);</span><br><span class="line">        <span class="keyword">public</span> Vector2 axleMinValue = Vector3.zero;</span><br><span class="line">        <span class="keyword">public</span> List&lt;Vector2[]&gt; datas = <span class="keyword">new</span> List&lt;Vector2[]&gt;();</span><br><span class="line"></span><br><span class="line">        [<span class="meta">Space</span>]</span><br><span class="line">        [<span class="meta">Header(<span class="meta-string">"刻度线"</span>)</span>]</span><br><span class="line">        <span class="keyword">public</span> <span class="keyword">int</span> scaleLineHeight = <span class="number">5</span>;</span><br><span class="line">        <span class="keyword">public</span> Vector2 subdivisions = <span class="keyword">new</span> Vector2(<span class="number">10</span>, <span class="number">10</span>);</span><br><span class="line"></span><br><span class="line">        [<span class="meta">Space</span>]</span><br><span class="line">        [<span class="meta">Header(<span class="meta-string">"数据"</span>)</span>]</span><br><span class="line">        <span class="keyword">public</span> Color lineColor = Color.blue;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">protected</span> <span class="keyword">override</span> <span class="keyword">void</span> <span class="title">OnPopulateMesh</span>(<span class="params">VertexHelper vh</span>)</span></span><br><span class="line"><span class="function"></span>        &#123;</span><br><span class="line">            vh.Clear();</span><br><span class="line">            DrawAxle(vh);</span><br><span class="line">            DrawLine(vh);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;summary&gt;</span></span></span><br><span class="line">        <span class="comment"><span class="doctag">///</span> 坐标轴</span></span><br><span class="line">        <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;/summary&gt;</span></span></span><br><span class="line">        <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;param name="vh"&gt;</span><span class="doctag">&lt;/param&gt;</span></span></span><br><span class="line">        <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">DrawAxle</span>(<span class="params">VertexHelper vh</span>)</span></span><br><span class="line"><span class="function"></span>        &#123;</span><br><span class="line">            UIVertex[] verts = <span class="keyword">new</span> UIVertex[<span class="number">4</span>];</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; verts.Length; i++)</span><br><span class="line">            &#123;</span><br><span class="line">                verts[i].color = axleColor;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="comment">// Y轴</span></span><br><span class="line">            verts[<span class="number">0</span>].position = offset;</span><br><span class="line">            verts[<span class="number">1</span>].position = <span class="keyword">new</span> Vector2(lineWidth, <span class="number">0</span>) + offset;</span><br><span class="line">            verts[<span class="number">2</span>].position = <span class="keyword">new</span> Vector2(lineWidth, height) + offset;</span><br><span class="line">            verts[<span class="number">3</span>].position = <span class="keyword">new</span> Vector2(<span class="number">0</span>, height) + offset;</span><br><span class="line">            vh.AddUIVertexQuad(verts);</span><br><span class="line"></span><br><span class="line">            <span class="comment">// X轴</span></span><br><span class="line">            verts[<span class="number">0</span>].position = offset;</span><br><span class="line">            verts[<span class="number">1</span>].position = <span class="keyword">new</span> Vector2(width, <span class="number">0</span>) + offset;</span><br><span class="line">            verts[<span class="number">2</span>].position = <span class="keyword">new</span> Vector2(width, lineWidth) + offset;</span><br><span class="line">            verts[<span class="number">3</span>].position = <span class="keyword">new</span> Vector2(<span class="number">0</span>, lineWidth) + offset;</span><br><span class="line">            vh.AddUIVertexQuad(verts);</span><br><span class="line"></span><br><span class="line">            ScaleLine();</span><br><span class="line">            Arrow();</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 刻度线</span></span><br><span class="line">            <span class="function"><span class="keyword">void</span> <span class="title">ScaleLine</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>            &#123;</span><br><span class="line">                Vector2 offset;</span><br><span class="line"></span><br><span class="line">                <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; subdivisions.x; i++)</span><br><span class="line">                &#123;</span><br><span class="line">                    offset = <span class="keyword">this</span>.offset + <span class="keyword">new</span> Vector2(width / subdivisions.x * i, <span class="number">0</span>);</span><br><span class="line">                    verts[<span class="number">0</span>].position = offset;</span><br><span class="line">                    verts[<span class="number">1</span>].position = <span class="keyword">new</span> Vector2(lineWidth, <span class="number">0</span>) + offset;</span><br><span class="line">                    verts[<span class="number">2</span>].position = <span class="keyword">new</span> Vector2(lineWidth, scaleLineHeight) + offset;</span><br><span class="line">                    verts[<span class="number">3</span>].position = <span class="keyword">new</span> Vector2(<span class="number">0</span>, scaleLineHeight) + offset;</span><br><span class="line">                    vh.AddUIVertexQuad(verts);</span><br><span class="line">                &#125;</span><br><span class="line"></span><br><span class="line">                <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; subdivisions.y; i++)</span><br><span class="line">                &#123;</span><br><span class="line">                    offset = <span class="keyword">this</span>.offset + <span class="keyword">new</span> Vector2(<span class="number">0</span>, height / subdivisions.y * i);</span><br><span class="line">                    verts[<span class="number">0</span>].position = offset;</span><br><span class="line">                    verts[<span class="number">1</span>].position = <span class="keyword">new</span> Vector2(scaleLineHeight, <span class="number">0</span>) + offset;</span><br><span class="line">                    verts[<span class="number">2</span>].position = <span class="keyword">new</span> Vector2(scaleLineHeight, lineWidth) + offset;</span><br><span class="line">                    verts[<span class="number">3</span>].position = <span class="keyword">new</span> Vector2(<span class="number">0</span>, lineWidth) + offset;</span><br><span class="line">                    vh.AddUIVertexQuad(verts);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 箭头</span></span><br><span class="line">            <span class="function"><span class="keyword">void</span> <span class="title">Arrow</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>            &#123;</span><br><span class="line">                Vector2 offset;</span><br><span class="line">                <span class="keyword">float</span> arrowLength = width / subdivisions.x / <span class="number">2</span>;</span><br><span class="line"></span><br><span class="line">                <span class="comment">// X轴</span></span><br><span class="line">                offset = <span class="keyword">this</span>.offset + <span class="keyword">new</span> Vector2(width, <span class="number">0</span>);</span><br><span class="line">                verts[<span class="number">0</span>].position = offset;</span><br><span class="line">                verts[<span class="number">1</span>].position = <span class="keyword">new</span> Vector2(<span class="number">0</span>, lineWidth) + offset;</span><br><span class="line">                verts[<span class="number">2</span>].position = <span class="keyword">new</span> Vector2(-arrowLength, lineWidth + scaleLineHeight) + offset;</span><br><span class="line">                verts[<span class="number">3</span>].position = <span class="keyword">new</span> Vector2(-arrowLength, scaleLineHeight) + offset;</span><br><span class="line">                vh.AddUIVertexQuad(verts);</span><br><span class="line"></span><br><span class="line">                verts[<span class="number">0</span>].position = <span class="keyword">new</span> Vector2(<span class="number">0</span>, lineWidth) + offset;</span><br><span class="line">                verts[<span class="number">1</span>].position = offset;</span><br><span class="line">                verts[<span class="number">2</span>].position = <span class="keyword">new</span> Vector2(-arrowLength, -lineWidth - scaleLineHeight) + offset;</span><br><span class="line">                verts[<span class="number">3</span>].position = <span class="keyword">new</span> Vector2(-arrowLength, -scaleLineHeight) + offset;</span><br><span class="line">                vh.AddUIVertexQuad(verts);</span><br><span class="line"></span><br><span class="line">                <span class="comment">// Y轴</span></span><br><span class="line">                offset = <span class="keyword">this</span>.offset + <span class="keyword">new</span> Vector2(<span class="number">0</span>, height);</span><br><span class="line">                verts[<span class="number">0</span>].position = offset;</span><br><span class="line">                verts[<span class="number">1</span>].position = <span class="keyword">new</span> Vector2(lineWidth, <span class="number">0</span>) + offset;</span><br><span class="line">                verts[<span class="number">2</span>].position = <span class="keyword">new</span> Vector2(lineWidth + scaleLineHeight, -arrowLength) + offset;</span><br><span class="line">                verts[<span class="number">3</span>].position = <span class="keyword">new</span> Vector2(scaleLineHeight, -arrowLength) + offset;</span><br><span class="line">                vh.AddUIVertexQuad(verts);</span><br><span class="line"></span><br><span class="line">                verts[<span class="number">0</span>].position = offset;</span><br><span class="line">                verts[<span class="number">1</span>].position = <span class="keyword">new</span> Vector2(lineWidth, <span class="number">0</span>) + offset;</span><br><span class="line">                verts[<span class="number">2</span>].position = <span class="keyword">new</span> Vector2(lineWidth - scaleLineHeight, -arrowLength) + offset;</span><br><span class="line">                verts[<span class="number">3</span>].position = <span class="keyword">new</span> Vector2(-scaleLineHeight, -arrowLength) + offset;</span><br><span class="line">                vh.AddUIVertexQuad(verts);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;summary&gt;</span></span></span><br><span class="line">        <span class="comment"><span class="doctag">///</span> 画数据折线</span></span><br><span class="line">        <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;/summary&gt;</span></span></span><br><span class="line">        <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">DrawLine</span>(<span class="params">VertexHelper vh</span>)</span></span><br><span class="line"><span class="function"></span>        &#123;</span><br><span class="line">            <span class="keyword">foreach</span> (<span class="keyword">var</span> data <span class="keyword">in</span> datas)</span><br><span class="line">            &#123;</span><br><span class="line">                Vector2[] pixelPoints = <span class="keyword">new</span> Vector2[data.Length];</span><br><span class="line">                <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; data.Length; i++)</span><br><span class="line">                &#123;</span><br><span class="line">                    pixelPoints[i].x = (data[i].x - axleMinValue.x) / axleMaxValue.x * width;</span><br><span class="line">                    pixelPoints[i].y = (data[i].y - axleMinValue.y) / axleMaxValue.y * height;</span><br><span class="line">                    pixelPoints[i] += offset;</span><br><span class="line">                &#125;</span><br><span class="line"></span><br><span class="line">                UIVertex[] verts = <span class="keyword">new</span> UIVertex[<span class="number">4</span>];</span><br><span class="line">                <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; verts.Length; i++)</span><br><span class="line">                &#123;</span><br><span class="line">                    verts[i].color = lineColor;</span><br><span class="line">                &#125;</span><br><span class="line"></span><br><span class="line">                <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; pixelPoints.Length - <span class="number">1</span>; i++)</span><br><span class="line">                &#123;</span><br><span class="line">                    SetVerts(pixelPoints[i], pixelPoints[i + <span class="number">1</span>], lineWidth, verts);</span><br><span class="line">                    vh.AddUIVertexQuad(verts);</span><br><span class="line">                &#125;</span><br><span class="line"></span><br><span class="line">                <span class="comment">// 点状数据</span></span><br><span class="line">                <span class="comment">//foreach (var item in pixelPoints)</span></span><br><span class="line">                <span class="comment">//&#123;</span></span><br><span class="line">                <span class="comment">//    verts[0].position = item;</span></span><br><span class="line">                <span class="comment">//    verts[1].position = new Vector2(5, 0) + item;</span></span><br><span class="line">                <span class="comment">//    verts[2].position = new Vector2(5, 5) + item;</span></span><br><span class="line">                <span class="comment">//    verts[3].position = new Vector2(0, 5) + item;</span></span><br><span class="line">                <span class="comment">//    vh.AddUIVertexQuad(verts);</span></span><br><span class="line">                <span class="comment">//&#125;</span></span><br><span class="line"></span><br><span class="line">                <span class="function"><span class="keyword">void</span> <span class="title">SetVerts</span>(<span class="params">Vector2 _start, Vector2 _end, <span class="keyword">float</span> _width, UIVertex[] _verts</span>)</span></span><br><span class="line"><span class="function"></span>                &#123;</span><br><span class="line">                    Vector2[] tmp = PhysicsMath.GetRect(_start, _end, _width);</span><br><span class="line">                    _verts[<span class="number">0</span>].position = tmp[<span class="number">0</span>];</span><br><span class="line">                    _verts[<span class="number">1</span>].position = tmp[<span class="number">1</span>];</span><br><span class="line">                    _verts[<span class="number">2</span>].position = tmp[<span class="number">3</span>];</span><br><span class="line">                    _verts[<span class="number">3</span>].position = tmp[<span class="number">2</span>];</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;summary&gt;</span></span></span><br><span class="line">        <span class="comment"><span class="doctag">///</span> 添加数据</span></span><br><span class="line">        <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;/summary&gt;</span></span></span><br><span class="line">        <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;param name="datas"&gt;</span><span class="doctag">&lt;/param&gt;</span></span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">AddDatas</span>(<span class="params">Vector2[] datas</span>)</span></span><br><span class="line"><span class="function"></span>        &#123;</span><br><span class="line">            <span class="keyword">this</span>.datas.Add(datas);</span><br><span class="line">            SetVerticesDirty();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;summary&gt;</span></span></span><br><span class="line">        <span class="comment"><span class="doctag">///</span> 清空数据</span></span><br><span class="line">        <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;/summary&gt;</span></span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Clear</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>        &#123;</span><br><span class="line">            datas.Clear();</span><br><span class="line">            SetVerticesDirty();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;summary&gt;</span></span></span><br><span class="line">        <span class="comment"><span class="doctag">///</span> 刷新数据</span></span><br><span class="line">        <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;/summary&gt;</span></span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Refresh</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>        &#123;</span><br><span class="line">            SetAllDirty();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">if</span> UNITY_EDITOR</span></span><br><span class="line">        <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;summary&gt;</span></span></span><br><span class="line">        <span class="comment"><span class="doctag">///</span> 属性面板值发生变化时调用</span></span><br><span class="line">        <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;/summary&gt;</span></span></span><br><span class="line">        <span class="function"><span class="keyword">protected</span> <span class="keyword">override</span> <span class="keyword">void</span> <span class="title">OnValidate</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>        &#123;</span><br><span class="line">            SetVerticesDirty();</span><br><span class="line">        &#125;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+                        <hr>
+                        <div>
+                            <p>
+                                
+                                    <span class="badge badge-light">#&nbsp;UGUI</span>
+                                    &nbsp;
+                                
+                            </p>
+                        </div>
+                        <br>
+                        
+                            <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a href="https://zh.wikipedia.org/wiki/Wikipedia:CC_BY-SA_3.0%E5%8D%8F%E8%AE%AE%E6%96%87%E6%9C%AC" rel="nofollow noopener">CC BY-SA 3.0协议</a> 。转载请注明出处！</p>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="d-none d-lg-block col-lg-2 toc-container">
+            
+  <div id="toc">
+    <p class="h4"><i class="far fa-list-alt"></i> Toc:</p> 
+    <div id="tocbot"></div>
+  </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- custom -->
+
+
+<!-- Comments -->
+<div class="comments" id="comments">
+    
+</div>
+    
+</main>
+
+<footer class="mt-5">
+  <div class="text-center py-3">
+    <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><b>Hexo</b></a>
+    <i class="iconfont icon-love"></i>
+    <a href="https://github.com/0x2e/Material-T" target="_blank" rel="nofollow noopener"> <b>Material-T</b></a>
+    <br>
+    
+  </div>
+</footer>
+
+  <!-- SCRIPTS -->
+  <script src="/lib/mdbootstrap/js/jquery-3.4.1.min.js"></script>
+  <script src="/lib/mdbootstrap/js/popper.min.js"></script>
+  <script src="/lib/mdbootstrap/js/bootstrap.min.js?v=4.3.1"></script>
+  <script src="/lib/mdbootstrap/js/mdb.min.js?v=4.8.7"></script>
+  <script src="/js/main.js"></script>
+  
+    
+      <script src="/lib/tocbot/tocbot.min.js?v=4.7.0"></script>
+    
+    <script src="/js/post.js"></script>
+  
+  
+    <script src="/lib/prettify/prettify.min.js?v=0.1.0"></script>
+    <script>
+      $(document).ready(function(){
+        $('pre').addClass('prettyprint linenums');
+        prettyPrint();
+      })
+    </script>
+  
+  
+    <script src="/lib/typed/typed.min.js?v=2.0.9"></script>
+    <script>
+        var typed = new Typed('#subtitle', {
+          strings: [
+            '  ',
+            "UGUI 源码研究及扩展 ：利用Graphic做UI折线图&nbsp;",
+        ],
+        cursorChar: "_",
+        typeSpeed: 70,
+        startDelay: 300, //开始之前延迟300毫秒
+        loop: true,
+        });
+        $(".typed-cursor").addClass("h2");
+    </script>
+  
+  
+    <script src="/lib/anchor/anchor.min.js?v=4.2.0"></script>
+    <script>
+      anchors.options = {
+        placement: "right",
+        visible: "false",
+        
+      };
+      anchors.add(".post-content > h1,h2,h3,h4,h5,h6");
+    </script>
+  
+</body>
+</html>
